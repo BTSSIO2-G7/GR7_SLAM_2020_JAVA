@@ -1,7 +1,5 @@
 package gsb.modele;
 
-import java.util.Date;
-
 public class Visiteur {
 
 	protected  String  matricule;

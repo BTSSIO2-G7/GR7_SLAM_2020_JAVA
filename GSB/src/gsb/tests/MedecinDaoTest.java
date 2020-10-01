@@ -1,6 +1,5 @@
 package gsb.tests;
 
-import java.util.ArrayList;
 import gsb.modele.*;
 import gsb.modele.dao.*;
 import gsb.utils.AffichageModele;
