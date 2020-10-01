@@ -3,29 +3,34 @@ package gsb.modele.dao;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import gsb.modele.Medicament;
 import gsb.modele.Offrir;
+import gsb.modele.Visite;
 
 public class OffrirDao {
-	public static Offrir rechercher(String unCodePostal) {
+	public static Offrir rechercher(String unDepotLegal, String uneReference) {
 		Offrir uneOffre = null;
 		try {
 			
-			ResultSet resultatReq =ConnexionMySql.execReqSelection("select * from localite where CODEPOSTAL ='"+unCodePostal+"'");
+			ResultSet resultatReq =ConnexionMySql.execReqSelection("select * from offre where MED_DEPOTLEGAL ='"+unDepotLegal+"' AND REFERENCE'"+uneReference+"'");
 			if (resultatReq.next()){
-				uneOffre  = new Offrir(resultatReq.getString(1), resultatReq.getString(2));
+				Medicament unMedicament= MedicamentDao.rechercher(resultatReq.getString(2));
+				Visite uneVisite= VisiteDao.rechercher(resultatReq.getString(3));
+				uneOffre  = new Offrir(unMedicament, uneVisite, resultatReq.getInt(1));
 			}
 	}
 	catch(Exception e) {  
-		System.out.println("Erreur requete : select * from localite where CODEPOSTAL ='"+unCodePostal+"'");  } 
+		System.out.println("select * from offre where MED_DEPOTLEGAL ='"+unDepotLegal+"' AND REFERENCE'"+uneReference+"'");  } 
 		return uneOffre;
 	}
 	
 	public static void creer(Offrir uneOffre){
 		String requeteInsertion;
-		String code = uneOffre.getCodePostal();		
-		String ville = uneOffre.getVille();
+		int qteofferte = uneOffre.getQteOfferte();		
+		String depotlegal = uneOffre.getUnMedicament().getDepotLegal();		
+		String reference = uneOffre.getUneVisite().getReference();
 		
-		requeteInsertion = "insert into localite values('"+code+"','"+ville+"')";
+		requeteInsertion = "insert into offrir values('"+qteofferte+"','"+depotlegal+"','"+reference+"')";
 		System.out.println(requeteInsertion);
 		int result = ConnexionMySql.execReqMaj(requeteInsertion);
 		System.out.println(result);
@@ -39,7 +44,9 @@ public class OffrirDao {
 		try {
 			ResultSet resultatReq =ConnexionMySql.execReqSelection("select * from localite");
 			while (resultatReq.next()){		
-				uneOffre  = new Offrir(resultatReq.getString(1), resultatReq.getString(2));
+				Medicament unMedicament= MedicamentDao.rechercher(resultatReq.getString(2));
+				Visite uneVisite= VisiteDao.rechercher(resultatReq.getString(3));
+				uneOffre  = new Offrir(unMedicament, uneVisite, resultatReq.getInt(1));
 				colOffrir.add(uneOffre);
 			}
 			} // fin try

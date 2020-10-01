@@ -3,29 +3,33 @@ package gsb.modele.dao;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import gsb.modele.Medicament;
 import gsb.modele.Stocker;
+import gsb.modele.Visiteur;
 
 public class StockerDao {
-	public static Stocker rechercher(String unCodePostal) {
+	public static Stocker rechercher(String unDepotLegal, String uneReference) {
 		Stocker unStock = null;
 		try {
 			
-			ResultSet resultatReq =ConnexionMySql.execReqSelection("select * from stock where CODEPOSTAL ='"+unCodePostal+"'");
+			ResultSet resultatReq =ConnexionMySql.execReqSelection("select * from offre where MED_DEPOTLEGAL ='"+unDepotLegal+"' AND REFERENCE'"+uneReference+"'");
 			if (resultatReq.next()){
-				unStock  = new Stocker(resultatReq.getString(1), resultatReq.getString(2));
+				Visiteur unVisiteur= VisiteurDao.rechercher(resultatReq.getString(2));
+				Medicament unMedicament= MedicamentDao.rechercher(resultatReq.getString(3));
+				unStock  = new Stocker(resultatReq.getInt(1), unVisiteur, unMedicament);
 			}
 	}
 	catch(Exception e) {  
-		System.out.println("Erreur requete : select * from stock where CODEPOSTAL ='"+unCodePostal+"'");  } 
+		System.out.println("select * from offre where MED_DEPOTLEGAL ='"+unDepotLegal+"' AND REFERENCE'"+uneReference+"'");  } 
 		return unStock;
 	}
 	
 	public static void creer(Stocker unStock){
 		String requeteInsertion;
-		String code = unStock.getCodePostal();		
-		String ville = unStock.getVille();
-		
-		requeteInsertion = "insert into stock values('"+code+"','"+ville+"')";
+		int qtestock = unStock.getQteStock();		
+		String depotlegal = unStock.getUnMedicament().getDepotLegal();		
+		String matricule = unStock.getUnVisiteur().getMatricule();		
+		requeteInsertion = "insert into offrir values('"+qtestock+"','"+matricule+"','"+depotlegal+"')";
 		System.out.println(requeteInsertion);
 		int result = ConnexionMySql.execReqMaj(requeteInsertion);
 		System.out.println(result);
@@ -33,18 +37,20 @@ public class StockerDao {
 	}
 	
 	public static ArrayList<Stocker> retournerListe(){
-		ArrayList<Stocker> colStock = new ArrayList<Stocker>();
+		ArrayList<Stocker> colStocker = new ArrayList<Stocker>();
 		Stocker unStock = null;
 		
 		try {
-			ResultSet resultatReq =ConnexionMySql.execReqSelection("select * from stock");
+			ResultSet resultatReq =ConnexionMySql.execReqSelection("select * from localite");
 			while (resultatReq.next()){		
-				unStock  = new Stocker(resultatReq.getString(1), resultatReq.getString(2));
-				colStock.add(unStock);
+				Visiteur unVisiteur= VisiteurDao.rechercher(resultatReq.getString(2));
+				Medicament unMedicament= MedicamentDao.rechercher(resultatReq.getString(3));
+				unStock  = new Stocker(resultatReq.getInt(1), unVisiteur, unMedicament);
+				colStocker.add(unStock);
 			}
 			} // fin try
 		catch(Exception e) {  
-			System.out.println("Erreur requete : select * from stock");  } 
-		return colStock;
+			System.out.println("Erreur requete : select * from localite");  } 
+		return colStocker;
 	}
 }
