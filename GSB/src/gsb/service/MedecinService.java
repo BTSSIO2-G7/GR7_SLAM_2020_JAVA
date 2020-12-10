@@ -16,19 +16,24 @@ import gsb.modele.dao.MedecinDao;
  * Fenêtre - Préférences - Java - Style de code - Modèles de code
  */
 public class MedecinService {
-	
+
 	public static Medecin rechercherMedecin(String unCodeMedecin){
 		Medecin unMedecin = null;
 		try{
-		if (unCodeMedecin==null) {
-            throw new Exception("Donnée obligatoire : code");
-        }
-		unMedecin = MedecinDao.rechercher(unCodeMedecin);
+			if (unCodeMedecin==null) {
+				throw new Exception("Donnée obligatoire : code");
+			}
+			else if (MedecinDao.rechercher(unCodeMedecin)==null) {
+				throw new Exception("Médecin non existant");
+			}
+			else {
+				unMedecin = MedecinDao.rechercher(unCodeMedecin);
+			}
 		}
 		catch(Exception e){
 			System.out.println( e.getMessage());
 		}
 		return unMedecin;
 	}
-	
+
 }

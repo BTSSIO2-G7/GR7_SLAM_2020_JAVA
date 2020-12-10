@@ -1,9 +1,3 @@
-/*
- * Créé le 22 févr. 2015
- *
- * TODO Pour changer le modèle de ce fichier généré, allez à :
- * Fenêtre - Préférences - Java - Style de code - Modèles de code
- */
 package gsb.modele.dao;
 
 import gsb.modele.Localite;
@@ -12,36 +6,28 @@ import gsb.modele.Medecin;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
-
-
-/**
- * @author Isabelle
- * 22 févr. 2015
- * TODO Pour changer le modèle de ce commentaire de type généré, allez à :
- * Fenêtre - Préférences - Java - Style de code - Modèles de code
- */
 public class MedecinDao {
 	
+// Recherche dans la BDD grâce à un code médecin
 	public static Medecin rechercher(String codeMedecin){
 		Medecin unMedecin=null;
-		Localite uneLocalite= null;
-		ResultSet reqSelection = ConnexionMySql.execReqSelection("select * from MEDECIN where CODEMED ='"+codeMedecin+"'");
+		ResultSet reqSelection = ConnexionMySql.execReqSelection("select * from medecin where CODEMED ='"+codeMedecin+"'");
 		try {
 			if (reqSelection.next()) {
-				uneLocalite = LocaliteDao.rechercher(reqSelection.getString(5));
+				Localite uneLocalite = LocaliteDao.rechercher(reqSelection.getString(5));
 				unMedecin = new Medecin(reqSelection.getString(1), reqSelection.getString(2), reqSelection.getString(3), reqSelection.getString(4), uneLocalite, reqSelection.getString(6), reqSelection.getString(7), reqSelection.getString(8) );	
 			};
 			}
 		catch(Exception e) {
-			System.out.println("erreur reqSelection.next() pour la requête - select * from MEDECIN where CODEMED ='"+codeMedecin+"'");
+			System.out.println("Erreur requete : select * from medecin where CODEMED ='"+codeMedecin+"'");
 			e.printStackTrace();
 			}
 		ConnexionMySql.fermerConnexionBd();
 		return unMedecin;
 	}
-	
+
+// Insertion dans la BDD d'un nouveau Medecin grâce à un objet passé en paramètre
 	public static void creer(Medecin unMedecin){
 		String requeteInsertion;
 		String code = unMedecin.getCodeMed();
@@ -51,18 +37,19 @@ public class MedecinDao {
 		String telephone = unMedecin.getTelephone();
 		String potentiel = unMedecin.getPotentiel();
 		String specialite = unMedecin.getSpecialite();
-		String localite = unMedecin.getLaLocalite().getVille();
+		String localite = unMedecin.getLaLocalite().getCodePostal();
 		
-		requeteInsertion = "insert into medecin values('"+code+"','"+nom+"','"+prenom+"','"+adresse+"','"+telephone+"','"+potentiel+"','"+specialite+"','"+localite+"')";
+		requeteInsertion = "insert into medecin values('"+code+"','"+nom+"','"+prenom+"','"+adresse+"','"+localite+"','"+telephone+"','"+potentiel+"','"+specialite+"')";
 		System.out.println(requeteInsertion);
 		int result = ConnexionMySql.execReqMaj(requeteInsertion);
 		System.out.println(result);
 		ConnexionMySql.fermerConnexionBd();
 	}
-	
+
+// Retour de tous les médecins de la BDD
 	public static ArrayList<Medecin> retournerListe(){
 		ArrayList<Medecin> collectionDesMedecins = new ArrayList<Medecin>();
-		ResultSet reqSelection = ConnexionMySql.execReqSelection("select CODEMED from MEDECIN");
+		ResultSet reqSelection = ConnexionMySql.execReqSelection("select CODEMED from medecin");
 		try{
 		while (reqSelection.next()) {
 			String codeMedecin = reqSelection.getString(1);
@@ -71,25 +58,9 @@ public class MedecinDao {
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("erreur retournerCollectionDesMedecins()");
+			System.out.println("erreur retournerListe()");
 		}
 		return collectionDesMedecins;
 	}
 	
-	public static HashMap<String,Medecin> retournerDictionnaireDesMedecins(){
-		HashMap<String, Medecin> diccoDesMedecins = new HashMap<String, Medecin>();
-		ResultSet reqSelection = ConnexionMySql.execReqSelection("select CODEMED from MEDECIN");
-		try{
-		while (reqSelection.next()) {
-			String codeMedecin = reqSelection.getString(1);
-		    diccoDesMedecins.put(codeMedecin, MedecinDao.rechercher(codeMedecin));
-			}
-		}
-		catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("erreur retournerDiccoDesMedecins()");
-		}
-		return diccoDesMedecins;
-	}
-
 }

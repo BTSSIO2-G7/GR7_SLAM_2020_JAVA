@@ -8,7 +8,7 @@ public class Visite {
 	protected  Medecin  unMedecin;
 	protected  Visiteur  unVisiteur;
 	
-	public Visite(String reference, String date, String commentaire, Medecin unMedecin, Visiteur unVisiteur) {
+	public Visite(String reference, String date, String commentaire, Visiteur unVisiteur, Medecin unMedecin) {
 		this.reference = reference;
 		this.date = date;
 		this.commentaire = commentaire;

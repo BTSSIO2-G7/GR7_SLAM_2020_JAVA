@@ -35,10 +35,17 @@ public class AffichageModele {
 	
 	public static void afficherVisite(Visite uneVisite) {
 		System.out.println("Référence visite :"+uneVisite.getReference());
+		System.out.println("Visiteur :"+uneVisite.getUnVisiteur().getMatricule());
+		System.out.println("Medecin :"+uneVisite.getUnMedecin().getCodeMed());
 	}
 	
 	public static void afficherVisiteur(Visiteur unVisiteur) {
 		System.out.println("Nom du visiteur :"+unVisiteur.getNom());
+	}
+
+	public static void afficherOffre(Offrir uneOffre) {
+		System.out.println("Quantité offerte :"+uneOffre.getQteOfferte());
+		
 	}
 
 }

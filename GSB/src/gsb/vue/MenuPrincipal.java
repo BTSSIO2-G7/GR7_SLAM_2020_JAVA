@@ -52,7 +52,7 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 		contentPane.add(desktopPane, BorderLayout.CENTER);
 
 		setTitle("GSB");
-		setSize(500, 400);
+		setSize(1000, 800);
 
 		// Ajout d'une barre de menus à la fenêtre
 		mbar = new JMenuBar();
@@ -73,12 +73,15 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 		mMedicaments.add(mE2);
 
 		mVisites = new JMenu("Visites");
-		JMenuItem mA1 = new JMenuItem("Consultation Visite");
-		mE1.addActionListener(this); // installation d'un écouteur d'action
+		JMenuItem mA1 = new JMenuItem("Liste des Visites");
+		mA1.addActionListener(this); // installation d'un écouteur d'action
 		mVisites.add(mA1);
 		JMenuItem mA2 = new JMenuItem("Ajout Visite");
 		mA2.addActionListener(this);
 		mVisites.add(mA2);
+		JMenuItem mA3 = new JMenuItem("Mise à Jour d'une Visite");
+		mA3.addActionListener(this);
+		mVisites.add(mA3);
 
 		mbar.add(mMedecins);
 		mbar.add(mMedicaments);
@@ -90,25 +93,25 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent evt) {
-		// TODO Raccord de méthode auto-généré
 		if (evt.getSource() instanceof JMenuItem) {
 			String ChoixOption = evt.getActionCommand();
 
-			if (ChoixOption.equals("Consultation Medecin")) {
-				// Creation d'une sous-fenêtre
-				ouvrirFenetre(new JIFMedecinCons());
-
-			} else if (ChoixOption.equals("Liste Medecins")) {
-				ouvrirFenetre(new JIFMedecinListeDic(this));
+			if (ChoixOption.equals("Liste des Visites")) {
+				ouvrirFenetre(new JIFVisiteListeCol(this));
+			}
+			else if (ChoixOption.equals("Ajout Visite")) {
+				ouvrirFenetre(new JIFVisiteAjout());
+			}
+			else if (ChoixOption.equals("Mise à Jour d'une Visite")) {
+				ouvrirFenetre(new JIFVisiteMaj());
 			}
 
 		}
 
 	}
-
+	
 	public void ouvrirFenetre(JInternalFrame uneFenetre) {
-		myJInternalFrame.dispose(); // si une fenêtre était dejà affichée, elle
-									// est libérée
+
 		myJInternalFrame = uneFenetre;
 		myJInternalFrame.setVisible(true);
 		myJInternalFrame.setResizable(true);
@@ -117,5 +120,6 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 		myJInternalFrame.setSize(480, 380);
 		desktopPane.add(myJInternalFrame);
 	}
+
 
 }

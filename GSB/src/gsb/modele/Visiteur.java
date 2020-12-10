@@ -8,25 +8,21 @@ public class Visiteur {
 	protected  String  login;
 	protected  String  mdp;
 	protected  String  adresse;
-	protected  Localite  uneLocalite;
-	protected  String  telephone;
+	protected  Localite  laLocalite;
 	protected  String  dateEntree;
-	protected  int  prime;
 	protected  String  codeUnite;
 	protected  String  nomUnite;
 	
-	public Visiteur(String matricule, String nom, String prenom, String login, String mdp, String adresse,
-			Localite uneLocalite, String telephone, String dateEntree, int prime, String codeUnite, String nomUnite) {
+	public Visiteur(String matricule, String nom, String prenom, String login, String mdp, String adresse, Localite uneLocalite,
+			 String dateEntree, String codeUnite, String nomUnite) {
 		this.matricule = matricule;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.login = login;
 		this.mdp = mdp;
 		this.adresse = adresse;
-		this.uneLocalite = uneLocalite;
-		this.telephone = telephone;
+		this.laLocalite = uneLocalite;
 		this.dateEntree = dateEntree;
-		this.prime = prime;
 		this.codeUnite = codeUnite;
 		this.nomUnite = nomUnite;
 	}
@@ -79,20 +75,13 @@ public class Visiteur {
 		this.adresse = adresse;
 	}
 
-	public Localite getUneLocalite() {
-		return uneLocalite;
+
+	public Localite getLaLocalite() {
+		return laLocalite;
 	}
 
-	public void setUneLocalite(Localite uneLocalite) {
-		this.uneLocalite = uneLocalite;
-	}
-
-	public String getTelephone() {
-		return telephone;
-	}
-
-	public void setTelephone(String telephone) {
-		this.telephone = telephone;
+	public void setLaLocalite(Localite laLocalite) {
+		this.laLocalite = laLocalite;
 	}
 
 	public String getDateEntree() {
@@ -103,13 +92,6 @@ public class Visiteur {
 		this.dateEntree = dateEntree;
 	}
 
-	public int getPrime() {
-		return prime;
-	}
-
-	public void setPrime(int prime) {
-		this.prime = prime;
-	}
 
 	public String getCodeUnite() {
 		return codeUnite;
