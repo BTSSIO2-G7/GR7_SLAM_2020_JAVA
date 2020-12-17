@@ -29,6 +29,7 @@ public class JIFVisiteAjout extends JIFVisite  implements ActionListener {
         
     public JIFVisiteAjout() {
         super();
+        JTcommentaire.setEditable(false);
         ajouter = new JButton("Ajouter"); // Ajout d'un bouton d'ajout
         pBoutons.add(ajouter);
         // déclaration des sources d'évènements

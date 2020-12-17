@@ -105,6 +105,9 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 			else if (ChoixOption.equals("Mise à Jour d'une Visite")) {
 				ouvrirFenetre(new JIFVisiteMaj());
 			}
+			else if (ChoixOption.equals("Consultation Medicament")) {
+				ouvrirFenetre(new JIFMedicamentCons());
+			}
 
 		}
 
@@ -118,7 +121,9 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 		myJInternalFrame.setMaximizable(true);
 		myJInternalFrame.setClosable(true);
 		myJInternalFrame.setSize(480, 380);
-		desktopPane.add(myJInternalFrame);
+		desktopPane.add(myJInternalFrame);		
+		myJInternalFrame.moveToFront();
+
 	}
 
 

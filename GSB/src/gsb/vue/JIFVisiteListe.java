@@ -93,7 +93,7 @@ public class JIFVisiteListe extends JInternalFrame  {
 		p.add(scroll);
 
 		this.setTitle("Tableau des Visites");
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
 		p.add(scroll);
 	}

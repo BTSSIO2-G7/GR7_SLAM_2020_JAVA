@@ -44,7 +44,6 @@ public class JIFVisiteListeCol extends JIFVisiteListe  implements ActionListener
         pBoutons.add(rechercher);
         // déclaration des sources d'évènements
         rechercher.addActionListener(this);
-        setDefaultCloseOperation(HIDE_ON_CLOSE);
         setTitle("Liste des Visites");
         
         // ajout d'un écouteur d'évènement pour la fermeture de la fenêtre
@@ -63,6 +62,9 @@ public class JIFVisiteListeCol extends JIFVisiteListe  implements ActionListener
 				String matricule = JTmatricule.getText();
 				String date = JTdatevisite.getText();
 				afficherTableau(matricule, date);
+				
+				JTdatevisite.setEditable(false);
+				JTmatricule.setEditable(false);
 						
 				// On crée aussi une zone de recherche pour obtenir une visite détaillée
 				pSaisie = new JPanel();

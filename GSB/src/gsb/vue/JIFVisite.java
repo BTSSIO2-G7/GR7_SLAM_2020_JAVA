@@ -16,14 +16,12 @@ import gsb.service.MedecinService;
 import gsb.service.VisiteurService;
 
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
@@ -51,6 +49,16 @@ public class JIFVisite extends JInternalFrame  {
 	protected JTextField JTcommentaire;
 	protected JTextField JTmatricule;
 	protected JTextField JTcodemed;
+	
+	protected JLabel JLmedOffre1;
+	protected JLabel JLqteOffre1;
+	protected JLabel JLmedOffre2;
+	protected JLabel JLqteOffre2;
+
+	protected JTextField JTmedOffre1;
+	protected JTextField JTqteOffre1;
+	protected JTextField JTmedOffre2;
+	protected JTextField JTqteOffre2;
 
 	public JIFVisite() {
 		p = new JPanel();  // panneau principal de la fenêtre
@@ -142,22 +150,32 @@ public class JIFVisite extends JInternalFrame  {
 
 	}
 
-	public void afficherTableau() {
-		// Méthode permettant d'afficher un tableau d'insertion de médicaments
-		data = new String[2][3] ;
-		for(int i = 0; i < 2; i++){
-			data[i][0] = "Médicament" + (i+1);
-			data[i][1] = "";
-			data[i][2] = "";
-		}
-		String[] columnNames = {"Médicament", "Dépôt Légal", "Quantité Offerte"};
-		table = new JTable(data, columnNames);
+	public void afficherFormulaire(String reference) {
+		// Méthode permettant d'afficher un formulaire d'insertion de médicaments
+		
+		JLmedOffre1 = new JLabel("Médicament 1");
+		JLqteOffre1 = new JLabel("Quantité offerte");
+		JLmedOffre2 = new JLabel("Médicament 2");
+		JLqteOffre2 = new JLabel("Quantité offerte");
 
-		JScrollPane scroll = new JScrollPane(table);
-		scroll.setPreferredSize(new Dimension(400, 100));
-		p.add(scroll);
+		JTmedOffre1 = new JTextField();
+		JTqteOffre1 = new JTextField();
+		JTmedOffre2 = new JTextField();
+		JTqteOffre2 = new JTextField();   
+		
+		pTexte.add(JLmedOffre1);		
+		pTexte.add(JTmedOffre1);
 
-		this.setTitle("Tableau des Offres");
+		pTexte.add(JLqteOffre1);		
+		pTexte.add(JTqteOffre1);
+
+		pTexte.add(JLmedOffre2);		
+		pTexte.add(JTmedOffre2);
+
+		pTexte.add(JLqteOffre2);
+		pTexte.add(JTqteOffre2);
+
+		this.setTitle("Mise à Jour d'une Visite : " + reference);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	}
